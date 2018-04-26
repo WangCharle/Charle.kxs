@@ -1,0 +1,140 @@
+﻿1.sqlserver事务
+自动提交事务(单个sql语句)
+显示事务(程序的BeginTransaction)
+----------------------------------------------
+2.原子性
+一致性
+隔离性
+持久性
+
+
+-----------------------------------------------
+
+---开启事务
+begin tran
+--错误扑捉机制，看好啦，这里也有的。并且可以嵌套。
+begin try  
+   --语句正确
+   insert into lives (Eat,Play,Numb) values ('猪肉','足球',1)
+   --Numb为int类型，出错
+   insert into lives (Eat,Play,Numb) values ('猪肉','足球','abc')
+   --语句正确
+   insert into lives (Eat,Play,Numb) values ('狗肉','篮球',2)
+end try
+begin catch
+   select Error_number() as ErrorNumber,  --错误代码
+          Error_severity() as ErrorSeverity,  --错误严重级别，级别小于10 try catch 捕获不到
+          Error_state() as ErrorState ,  --错误状态码
+          Error_Procedure() as ErrorProcedure , --出现错误的存储过程或触发器的名称。
+          Error_line() as ErrorLine,  --发生错误的行号
+          Error_message() as ErrorMessage  --错误的具体信息
+   if(@@trancount>0) --全局变量@@trancount，事务开启此值+1，他用来判断是有开启事务
+      rollback tran  ---由于出错，这里回滚到开始，第一条语句也没有插入成功。
+end catch
+if(@@trancount>0)
+commit tran  --如果成功Lives表中，将会有3条数据。
+
+--表本身为空表，ID ,Numb为int 类型，其它为nvarchar类型
+select * from lives
+
+---------------------------------------------
+---开启事务
+begin tran
+--错误扑捉机制，看好啦，这里也有的。并且可以嵌套。
+begin try    
+   --语句正确
+   insert into lives (Eat,Play,Numb) values ('猪肉','足球',1)   
+    --加入保存点
+   save tran pigOneIn
+   --Numb为int类型，出错
+   insert into lives (Eat,Play,Numb) values ('猪肉','足球',2)
+   --语句正确
+   insert into lives (Eat,Play,Numb) values ('狗肉','篮球',3)
+end try
+begin catch
+   select Error_number() as ErrorNumber,  --错误代码
+          Error_severity() as ErrorSeverity,  --错误严重级别，级别小于10 try catch 捕获不到
+          Error_state() as ErrorState ,  --错误状态码
+          Error_Procedure() as ErrorProcedure , --出现错误的存储过程或触发器的名称。
+          Error_line() as ErrorLine,  --发生错误的行号
+          Error_message() as ErrorMessage  --错误的具体信息
+   if(@@trancount>0) --全局变量@@trancount，事务开启此值+1，他用来判断是有开启事务
+      rollback tran   ---由于出错，这里回滚事务到原点，第一条语句也没有插入成功。
+end catch
+if(@@trancount>0)
+rollback tran pigOneIn --如果成功Lives表中，将会有3条数据。
+
+--表本身为空表，ID ,Numb为int 类型，其它为nvarchar类型
+select * from lives
+-----------------------------
+delete lives  --清空数据
+set xact_abort off
+begin tran 
+    --语句正确
+   insert into lives (Eat,Play,Numb) values ('猪肉','足球',1)   
+   --Numb为int类型，出错,如果1234..那个大数据换成'132dsaf' xact_abort将失效
+   insert into lives (Eat,Play,Numb) values ('猪肉','足球',12345646879783213)
+   --语句正确
+   insert into lives (Eat,Play,Numb) values ('狗肉','篮球',3)
+commit tran
+select * from lives
+
+----------------------------------
+begin tran 
+  update lives set play='羽毛球'
+  waitfor delay '0:0:5'  
+  update dbo.Earth set Animal='老虎' 
+commit tran
+
+begin tran 
+  update Earth set Animal='老虎' 
+  waitfor  delay '0:0:5' --等待5秒执行下面的语句
+  update lives set play='羽毛球'
+commit tran
+select * from lives
+select * from Earth
+
+-------------------------
+
+多用户
+1.更新丢失,我更新后,你又更新啦
+2.不可重复读,多次重复读的数据不一致
+3.脏读,数据不一致,一个在读,一个在改
+4.幻读,平白无故的修改
+
+
+-------------------------------------
+
+锁定
+
+1.共享锁,数据源上放锁>只能读不能改,所有用户不能改
+
+
+2.排它锁,数据源上只能有一个独占的写锁,其他用户对该资源只能请求
+
+3.更新锁,可以转成独占或共享(写锁,读锁)
+
+4.意向锁,资源包括(行,列,页,表等)
+5.架构锁
+6.大容量更新锁
+
+-----------------------------------
+死锁,表作为资源
+
+
+-----------------------------------
+隔离级别
+并发读
+begin tran 
+  set deadlock_priority low
+  update Earth set Animal='老虎' 
+  waitfor  delay '0:0:5' --等待5秒执行下面的语句
+rollback tran
+
+set tran isolation level read uncommitted
+select * from Earth  --读取的数据为正在修改的数据 ，脏读
+waitfor  delay '0:0:5'  --5秒之后数据已经回滚
+select * from Earth  --回滚之后的数据
+>1.修改也可以读
+>2.
+
