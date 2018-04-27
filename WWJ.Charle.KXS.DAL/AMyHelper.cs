@@ -735,7 +735,7 @@ namespace WWJ.Charle.KXS.DAL
         /// 获取DataReader
         /// WWJ,由于操作频繁,有必要保留连接20180414
         /// 使用泛型转成具体的阅读器
-        /// 返回bool类型,重载,不影响原来调用者wwj20160416
+        /// 返回bool类型,重载,不影响原来调用者wwj20180416
         /// </summary>
         /// <returns></returns>
         public bool GetDataReader<T>(string sql, Func<T, bool> readeraction, List<IDataParameter> paras = null) where T : IDataReader

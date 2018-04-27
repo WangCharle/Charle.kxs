@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5F1874C5-5D9F-4F1D-AADA-425854DA5089}</ProjectGuid>
+    <ProjectGuid>{E2CF45FD-BF1B-4DCE-B7E4-3BB1104E5681}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WWJ.Charle.KXS.DAL</RootNamespace>
-    <AssemblyName>WWJ.Charle.KXS.DAL</AssemblyName>
+    <RootNamespace>WWJ.Charle.Common</RootNamespace>
+    <AssemblyName>WWJ.Charle.Common</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,11 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MySql.Data">
-      <HintPath>..\dll\MySql.Data.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,34 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AMyHelper.cs" />
-    <Compile Include="ConnectPoolHelper.cs" />
-    <Compile Include="CoreCommon.cs" />
-    <Compile Include="DALOperator.cs" />
-    <Compile Include="IMyADOHelper.cs" />
-    <Compile Include="ModelFe.cs" />
-    <Compile Include="MyADOProxy.cs" />
-    <Compile Include="MyODBCHelper.cs" />
-    <Compile Include="MysqlConnectPoolHelper.cs" />
-    <Compile Include="MySQLHelper.cs" />
-    <Compile Include="MySqlServerHelper.cs" />
-    <Compile Include="ODBCConnectPoolHelper.cs" />
+    <Compile Include="XMLTool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLServerPoolHelper.cs" />
-    <Compile Include="TestInterface.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="事务分析.txt" />
-    <Content Include="设计说明.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Test\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WWJ.Charle.Model\WWJ.Charle.Model.csproj">
-      <Project>{1e48083c-0282-4230-bb9a-c8be7b24c05b}</Project>
-      <Name>WWJ.Charle.Model</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

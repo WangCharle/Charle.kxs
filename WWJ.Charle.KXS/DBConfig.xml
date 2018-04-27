@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--从配置文件中把不同数据库的操作对象驻留到内存wwj20180427-->
+<DBTypeList>
+  <!--数据库类型名唯一标识-->
+  <DBName></DBName>
+  <DBType></DBType>
+  <Enable></Enable>
+  <connection></connection>
+  <!--采用加密的方式,后续完善-->
+  <issafe></issafe>
+  
+</DBTypeList>

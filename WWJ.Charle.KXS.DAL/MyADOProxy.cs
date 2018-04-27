@@ -74,16 +74,20 @@ namespace WWJ.Charle.KXS.DAL
         }
         #endregion
 
+
+        #region 操作部分
         /// <summary>
         /// 获取DataReader对象
         /// </summary>
         /// <param name="sql"></param>
         /// <param name="paras"></param>
         /// <returns></returns>
-        public void GetDataReader<T>(string sql, Action<T> actiondr, List<IDataParameter> paras = null)where T:IDataReader
+        public void GetDataReader<T>(string sql, Action<T> actiondr, List<IDataParameter> paras = null) where T : IDataReader
         {
-             myhelper.GetDataReader<T>(sql, actiondr, paras);
+            myhelper.GetDataReader<T>(sql, actiondr, paras);
         }
+        
+
 
         /// <summary>
         /// 获取DataTable
@@ -107,6 +111,10 @@ namespace WWJ.Charle.KXS.DAL
             return myhelper.MyExecuteNonQuery(sql, paras, tan);
         }
 
+        public int MyExecuteNonQuery<T>(string sql, List<T> paras = null, IDbTransaction tan = null) where T : IDataParameter
+        {
+            return myhelper.MyExecuteNonQuery<T>(sql, paras, tan);
+        }
         /// <summary>
         /// 获取阅读器对象
         /// </summary>
@@ -117,6 +125,17 @@ namespace WWJ.Charle.KXS.DAL
         {
             return myhelper.GetDataReader(sql, paras);
         }
+
+        public bool GetDataReader<T>(string sql, Func<T, bool> readeraction, List<IDataParameter> paras = null) where T : IDataReader
+        {
+            return myhelper.GetDataReader<T>(sql, readeraction, paras);
+        }
+
+        public object GetScalar(string sql, List<IDataParameter> paras = null)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
 
         #region 底层事务
         /// <summary>
@@ -147,15 +166,9 @@ namespace WWJ.Charle.KXS.DAL
             myhelper.DisposableCurrentTran();
         }
 
-        public bool GetDataReader<T>(string sql, Func<T, bool> readeraction, List<IDataParameter> paras = null) where T : IDataReader
-        {
-            return myhelper.GetDataReader<T>(sql, readeraction, paras);
-        }
+      
 
-        public int MyExecuteNonQuery<T>(string sql, List<T> paras = null, IDbTransaction tan = null) where T : IDataParameter
-        {
-            return myhelper.MyExecuteNonQuery<T>(sql, paras, tan);
-        }
+
 
         /// <summary>
         /// 获取事务

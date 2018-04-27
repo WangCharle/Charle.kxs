@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5F1874C5-5D9F-4F1D-AADA-425854DA5089}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{A8B5FA7B-CD5A-43EB-92ED-5539E82FE960}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WWJ.Charle.KXS.DAL</RootNamespace>
-    <AssemblyName>WWJ.Charle.KXS.DAL</AssemblyName>
+    <RootNamespace>WWJ.Charle.WinformTest</RootNamespace>
+    <AssemblyName>WWJ.Charle.WinformTest</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,47 +32,44 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MySql.Data">
-      <HintPath>..\dll\MySql.Data.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AMyHelper.cs" />
-    <Compile Include="ConnectPoolHelper.cs" />
-    <Compile Include="CoreCommon.cs" />
-    <Compile Include="DALOperator.cs" />
-    <Compile Include="IMyADOHelper.cs" />
-    <Compile Include="ModelFe.cs" />
-    <Compile Include="MyADOProxy.cs" />
-    <Compile Include="MyODBCHelper.cs" />
-    <Compile Include="MysqlConnectPoolHelper.cs" />
-    <Compile Include="MySQLHelper.cs" />
-    <Compile Include="MySqlServerHelper.cs" />
-    <Compile Include="ODBCConnectPoolHelper.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLServerPoolHelper.cs" />
-    <Compile Include="TestInterface.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="事务分析.txt" />
-    <Content Include="设计说明.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Test\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WWJ.Charle.Model\WWJ.Charle.Model.csproj">
-      <Project>{1e48083c-0282-4230-bb9a-c8be7b24c05b}</Project>
-      <Name>WWJ.Charle.Model</Name>
-    </ProjectReference>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

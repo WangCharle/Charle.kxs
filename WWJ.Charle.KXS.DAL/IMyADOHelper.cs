@@ -25,7 +25,7 @@ namespace WWJ.Charle.KXS.DAL
         /// <returns></returns>
         int MyExecuteNonQuery(string sql, List<IDataParameter> paras=null, IDbTransaction tan=null);
 
-
+        int MyExecuteNonQuery<T>(string sql, List<T> paras = null, IDbTransaction tan = null) where T : IDataParameter;
         /// <summary>
         /// 获取DataReader
         /// </summary>
@@ -39,7 +39,8 @@ namespace WWJ.Charle.KXS.DAL
 
         bool GetDataReader<T>(string sql, Func<T, bool> readeraction, List<IDataParameter> paras = null) where T : IDataReader;
 
-        int MyExecuteNonQuery<T>(string sql, List<T> paras = null, IDbTransaction tan = null) where T : IDataParameter;
+
+        object GetScalar(string sql, List<IDataParameter> paras = null);
 
     }
 }
